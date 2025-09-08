@@ -1,0 +1,716 @@
+<%= stylesheet_pack_tag 'decidim_core' %>
+<%= javascript_pack_tag 'decidim_core' %>
+<%= csrf_meta_tags %>
+<%= csp_meta_tag %>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+<section class="section" style="margin-bottom:0">
+  <div class="container">
+    <div class="chat-container border rounded border-secondary" style="display: flex; border-style: solid; border-color: green; height: 80vh; overflow: hidden; box-shadow: 0 2px 4px rgba(0,0,0,0.1); border-primary" role="region" aria-label="Chat Interface">
+      <!-- Sidebar -->
+      <div id="sidebar" style="width: 250px; background: #FF5722; color: #fff; padding: 1rem; display: flex; flex-direction: column;" role="navigation" aria-label="Sidebar Menu">
+        <h2 class="title is-4" style="color: white; text-align: center; margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid #3d5166;">IDEAL Chat</h2>
+        
+        <div class="sidebar-menu bg-success-subtle text-success-emphasis" style="flex-grow: 1; overflow-y: auto;">
+          <div class="menu">
+            <ul class="menu-list" style="padding-left: 0;">
+              <li>
+                <a class="tab-link is-active" data-tab="tab1" style="color: #fff; border-left: 4px solid #4CAF50; background: rgba(76, 175, 80, 0.1);" aria-current="page" tabindex="0">
+                  <span class="icon"><i class="fas fa-comment"></i></span>
+                  <span>General Chat</span>
+                </a>
+              </li>
+              <li>
+                <a class="tab-link" data-tab="tab2" style="color: #ecf0f1; border-left: 4px solid transparent;" tabindex="0">
+                  <span class="icon"><i class="fas fa-gavel"></i></span>
+                  <span>Legislation Chat</span>
+                </a>
+              </li>
+              <li>
+                <a class="tab-link" data-tab="tab3" style="color: #ecf0f1; border-left: 4px solid transparent;" tabindex="0">
+                  <span class="icon"><i class="fas fa-chart-bar"></i></span>
+                  <span>Reports Chat</span>
+                </a>
+              </li>
+              <li>
+                <a class="tab-link" data-tab="tab4" style="color: #ecf0f1; border-left: 4px solid transparent;" tabindex="0">
+                  <span class="icon"><i class="fas fa-file-alt"></i></span>
+                  <span>Social Indices</span>
+                </a>
+              </li>
+              <li>
+                <a class="tab-link" data-tab="tab5" style="color: #ecf0f1; border-left: 4px solid transparent;" tabindex="0">
+                  <span class="icon"><i class="fas fa-question-circle"></i></span>
+                  <span>FAQ</span>
+                </a>
+              </li>
+              <br/>
+              <li>
+                <a class="tab-link" data-tab="tab6" style="color: #ecf0f1; border-left: 4px solid transparent;" tabindex="0">
+                  <span class="icon"><i class="fas fa-cog"></i></span>
+                  <span>Settings</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Main Content -->
+      <div id="main-content" style="flex-grow: 1; display: flex; flex-direction: column; background: white;" role="main">
+        <!-- Chat Header -->
+        <div id="chat-header" style="background: #FF5722; color: white; padding: 1rem 1.5rem; font-size: 1.25rem; font-weight: 600;" aria-live="polite">
+          <span class="icon"><i class="fas fa-comment"></i></span>
+          <span id="chat-title">General Chat</span>
+        </div>
+
+        <!-- Tab Contents -->
+        <div id="tab1" class="tab-content" role="tabpanel" aria-labelledby="tab1-link" 
+             style="width:100%; flex-grow: 1; display: flex; flex-direction: column; height: 100%; background-color: #f7f7f8;">
+          <div id="chat-box-tab1" class="chat-box" 
+               style="flex-grow: 1; overflow-y: auto; padding: 1.5rem; display: flex; flex-direction: column; gap: 1rem;">
+          </div>
+          
+        <div id="spinner-tab1" class="spinner-grow" role="status" style="display: none; align-self: center; margin: 1rem;">
+          <span class="visually-hidden">Generating...</span>
+        </div>
+          <div class="field has-addons" 
+               style="flex-shrink: 0; padding: 1rem; border-top: 1px solid #ddd; background: #ffffff; display: flex; gap: 0.5rem; align-items: center;">
+            <div class="control is-expanded" style="flex-grow: 1;">
+              <input class="input" id="chat-input-tab1" type="text" placeholder="Type your question..." 
+                     style="border-radius: 2rem; border: 1px solid #ccc; padding: 0.75rem 1rem; width: 100%; font-size: 1rem;" 
+                     aria-label="Type your question for General Queries" tabindex="0" />
+            </div>
+
+            <div class="control">
+              <button class="button is-primary" id="send-btn-tab1" 
+                      style="border-radius: 50%; background-color: #10a37f; border: none; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; cursor: pointer;" tabindex="0">
+                <i class="fas fa-paper-plane" style="color: white;"></i>
+              </button>              
+            </div>
+            
+          </div>
+          <br/>
+        </div>
+
+        <div id="tab2" class="tab-content" style="flex-grow: 1; display: none; flex-direction: column; background-color: #f7f7f8;" role="tabpanel" aria-labelledby="tab2-link">
+          <div id="chat-box-tab2" class="chat-box" 
+               style="flex-grow: 1; padding: 1.5rem; overflow-y: auto; display: flex; flex-direction: column; gap: 1rem;" aria-live="polite">
+          </div>
+          <div id="spinner-tab2" class="spinner-grow" role="status" style="display: none; align-self: center; margin: 1rem;">
+          <span class="visually-hidden">Generating...</span>
+        </div>
+          <div class="field has-addons" 
+               style="margin: 0; padding: 1rem; border-top: 1px solid #ddd; background: #ffffff; display: flex; gap: 0.5rem; align-items: center;">
+            <div class="control is-expanded" style="flex-grow: 1;">
+              <input class="input" id="chat-input-tab2" type="text" placeholder="Ask about legislation..." 
+                     style="border-radius: 2rem; border: 1px solid #ccc; padding: 0.75rem 1rem; width: 100%; font-size: 1rem;" 
+                     aria-label="Ask about legislation" tabindex="0" />
+            </div>
+            <div class="control">
+              <button class="button is-primary" id="send-btn-tab2" 
+                      style="border-radius: 50%; background-color: #10a37f; border: none; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; cursor: pointer;" tabindex="0">
+                <i class="fas fa-paper-plane" style="color: white;"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div id="tab3" class="tab-content" style="flex-grow: 1; display: none; flex-direction: column; background-color: #f7f7f8;" role="tabpanel" aria-labelledby="tab3-link">
+          <div id="chat-box-tab3" class="chat-box" 
+               style="flex-grow: 1; padding: 1.5rem; overflow-y: auto; display: flex; flex-direction: column; gap: 1rem;" aria-live="polite">
+          </div>
+          <div id="spinner-tab3" class="spinner-grow" role="status" style="display: none; align-self: center; margin: 1rem;">
+          <span class="visually-hidden">Generating...</span>
+        </div>
+          <div class="field has-addons" 
+               style="margin: 0; padding: 1rem; border-top: 1px solid #ddd; background: #ffffff; display: flex; gap: 0.5rem; align-items: center;">
+            <div class="control is-expanded" style="flex-grow: 1;">
+              <input class="input" id="chat-input-tab3" type="text" placeholder="Ask about reports..." 
+                     style="border-radius: 2rem; border: 1px solid #ccc; padding: 0.75rem 1rem; width: 100%; font-size: 1rem;" 
+                     aria-label="Ask about reports" tabindex="0" />
+            </div>
+            <div class="control">
+              <button class="button is-primary" id="send-btn-tab3" 
+                      style="border-radius: 50%; background-color: #10a37f; border: none; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; cursor: pointer;" tabindex="0">
+                <i class="fas fa-paper-plane" style="color: white;"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div id="tab4" class="tab-content" style="flex-grow: 1; display: none; flex-direction: column; background-color: #f7f7f8;" role="tabpanel" aria-labelledby="tab4-link">
+          <div id="chat-box-tab4" class="chat-box"
+               style="flex-grow: 1; padding: 1.5rem; overflow-y: auto; display: flex; flex-direction: column; gap: 1rem;" aria-live="polite">
+          </div>
+          <div id="spinner-tab4" class="spinner-grow" role="status" style="display: none; align-self: center; margin: 1rem;">
+          <span class="visually-hidden">Generating...</span>
+        </div>
+          <div class="field has-addons"
+               style="margin: 0; padding: 1rem; border-top: 1px solid #ddd; background: #ffffff; display: flex; gap: 0.5rem; align-items: center;">
+            <div class="control is-expanded" style="flex-grow: 1;">
+              <input class="input" id="chat-input-tab4" type="text" placeholder="Ask about documentation..."
+                     style="border-radius: 2rem; border: 1px solid #ccc; padding: 0.75rem 1rem; width: 100%; font-size: 1rem;"
+                     aria-label="Ask about documentation" tabindex="0" />
+            </div>
+            <div class="control">
+              <button class="button is-primary" id="send-btn-tab4"
+                      style="border-radius: 50%; background-color: #10a37f; border: none; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; cursor: pointer;" tabindex="0">
+                <i class="fas fa-paper-plane" style="color: white;"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- FAQ Tab -->
+        <div id="tab5" class="tab-content" style="flex-grow: 1; display: none; padding: 1.5rem; overflow-y: auto;" role="tabpanel" aria-labelledby="tab5-link">
+          <h3 class="title is-4">Frequently Asked Questions</h3>
+          <div class="accordion bg-success">
+            <article class="message">
+              <div class="message-header faq-question" style="cursor: pointer;" role="button" aria-expanded="false" aria-controls="faq1" tabindex="0">
+                <p>What is IDEAL Chatbot?</p>
+                <span class="icon"><i class="fas fa-angle-down"></i></span>
+              </div>
+              <div class="message-body faq-answer" id="faq1" style="display: none;">
+                IDEAL Chatbot is an AI-powered assistant to help you with various queries about the platform, legislation, reports, and documentation.
+              </div>
+            </article>
+
+            <article class="message">
+              <div class="message-header faq-question" style="cursor: pointer;" role="button" aria-expanded="false" aria-controls="faq2" tabindex="0">
+                <p>How do I use the chat?</p>
+                <span class="icon"><i class="fas fa-angle-down"></i></span>
+              </div>
+              <div class="message-body faq-answer" id="faq2" style="display: none;">
+                Select a category from the sidebar and type your question in the input box at the bottom, then click Send or press Enter to get answers.
+              </div>
+            </article>
+
+            <article class="message">
+              <div class="message-header faq-question" style="cursor: pointer;" role="button" aria-expanded="false" aria-controls="faq3" tabindex="0">
+                <p>Can I download my chat history?</p>
+                <span class="icon"><i class="fas fa-angle-down"></i></span>
+              </div>
+              <div class="message-body faq-answer" id="faq3" style="display: none;">
+                Yes, go to the Settings tab and click the "Download Chat History" button to save your conversation from the current tab.
+              </div>
+            </article>
+            
+          </div>
+
+        </div>
+
+        <!-- Settings Tab -->
+        <div id="tab6" class="tab-content" style="flex-grow: 1; display: none; padding: 1.5rem; overflow-y: auto;" role="tabpanel" aria-labelledby="tab6-link">
+          <h3 class="title is-4">Settings</h3>
+          
+          <div class="field">
+            <label class="label" for="font-size-select">Font Size</label>
+            <div class="control">
+              <div class="select is-fullwidth">
+                <select id="font-size-select" aria-label="Select font size" tabindex="0">
+                  <option value="14px">Small</option>
+                  <option value="16px" selected>Medium</option>
+                  <option value="18px">Large</option>
+                  <option value="20px">Extra Large</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="field">
+            <label class="label" for="theme-color-select">Theme Color</label>
+            <div class="control">
+              <div class="select is-fullwidth">
+                <select id="theme-color-select" aria-label="Select theme color" tabindex="0">
+                  <option value="#4CAF50" selected>Green</option>
+                  <option value="#2196F3">Blue</option>
+                  <option value="#9C27B0">Purple</option>
+                  <option value="#FF5722">Orange</option>
+                  <option value="#807573">Gray</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="field">
+            <button id="download-chat-btn" class="button is-primary is-fullwidth mt-4" aria-label="Download chat history" tabindex="0">
+              <span class="icon"><i class="fas fa-download"></i></span>
+              <span> Download Chat History (Current Tab)</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Initialize variables
+    const tabLinks = document.querySelectorAll(".tab-link");
+    const tabContents = document.querySelectorAll(".tab-content");
+    let currentTab = "tab1";
+
+    // Store chat histories for each tab
+    const chatHistories = {
+      tab1: [],
+      tab2: [],
+      tab3: [],
+      tab4: [],
+    };
+
+    // Initial welcome messages per tab
+    const welcomeMessages = {
+      tab1: "Welcome to General Chat! How can I help you with General queries today?",
+      tab2: "Welcome to Legislation Chat! Ask me anything about laws and regulations.",
+      tab3: "Welcome to Reports Chat! I can help you with report-related questions.",
+      tab4: "Welcome to Social Indices Chat! What would you like to know about our Social Indices?",
+    };
+
+    // Append message to chat box
+    function appendMessage(tab, sender, text) {
+      const chatBox = document.getElementById(`chat-box-${tab}`);
+      if (!chatBox) return;
+      
+      const messageDiv = document.createElement("div");
+      messageDiv.className = `message ${sender === 'user' ? 'user-message' : 'bot-message'}`;
+      messageDiv.setAttribute('role', 'log');
+      
+      // Message bubble
+      const bubble = document.createElement("div");
+      bubble.className = `message-bubble ${sender === 'user' ? 'is-primary' : 'is-light'}`;
+      
+      // Message header (sender and time)
+      const header = document.createElement("div");
+      header.className = "message-header";
+      header.innerHTML = `
+        <span class="message-sender">${sender === 'user' ? 'You' : 'IDEAL Bot'} </span>
+        <span class="message-time">   ${new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</span>
+      `;
+      // Message content
+      const content = document.createElement("div");
+      content.className = "message-content";
+      content.textContent = text;
+      
+      bubble.appendChild(header);
+      bubble.appendChild(content);
+      messageDiv.appendChild(bubble);
+      chatBox.appendChild(messageDiv);
+      
+      // Scroll to bottom
+      chatBox.scrollTop = chatBox.scrollHeight;
+
+      // Store in history if not FAQ/Settings tab
+      if (tab !== 'tab5' && tab !== 'tab6') {
+        chatHistories[tab].push({
+          sender, 
+          text, 
+          time: new Date().toISOString()
+        });
+      }
+    }
+
+    function getEndpoint(tab) {
+      const endpoints = {
+        'tab1': '/idealchat/ask',
+        'tab2': '/idealchat/ask_legislation', 
+        'tab3': '/idealchat/ask_reports',
+        'tab4': '/idealchat/ask_documentation'
+      };
+      return endpoints[tab] || '/idealchat/ask';
+    }
+
+    function sendMessage(tab) {
+      const input = document.getElementById(`chat-input-${tab}`);
+      const sendBtn = document.getElementById(`send-btn-${tab}`);
+      const spinner = document.getElementById(`spinner-${tab}`);
+      const message = input.value.trim();
+      const endpoint = getEndpoint(tab);
+      
+      if (!message) return;
+
+      appendMessage(tab, "user", message);
+      input.value = "";
+      sendBtn.disabled = true;
+      sendBtn.classList.add('is-loading');
+      if (spinner) spinner.style.display = 'block'; // Show spinner
+
+      fetch(endpoint, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]')?.content || '',
+          "Accept": "application/json"
+        },
+        body: JSON.stringify({
+          message: message
+        })
+      })
+      .then(async response => {
+        if (!response.ok) {
+          const error = await response.json().catch(() => ({}));
+          throw new Error(error.message || `HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then(data => {
+        const answer = data.answer || "I didn't understand that. Could you rephrase your question?";
+        appendMessage(tab, "bot", answer);
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        appendMessage(tab, "bot", `Sorry, I encountered an error: ${error.message}`);
+      })
+      .finally(() => {
+        sendBtn.disabled = false;
+        sendBtn.classList.remove('is-loading');
+        if (spinner) spinner.style.display = 'none'; // Hide spinner
+        input.focus();
+      });
+    }
+
+    // Show welcome message on tab load
+    function showWelcomeMessage(tab) {
+      if (tab === "tab5" || tab === "tab6") return;
+      const chatBox = document.getElementById(`chat-box-${tab}`);
+      if (chatBox && chatBox.children.length === 0) {
+        appendMessage(tab, "bot", welcomeMessages[tab]);
+      }
+    }
+
+    // Switch tabs
+    tabLinks.forEach(link => {
+      link.addEventListener("click", function() {
+        // Remove active class from all tabs
+        tabLinks.forEach(t => {
+          t.classList.remove("is-active");
+          t.removeAttribute("aria-current");
+          t.style.borderLeftColor = "transparent";
+          t.style.backgroundColor = "";
+        });
+        
+        // Add active to clicked tab
+        this.classList.add("is-active");
+        this.setAttribute("aria-current", "page");
+        this.style.borderLeftColor = "#4CAF50";
+        this.style.backgroundColor = "rgba(76, 175, 80, 0.1)";
+        
+        const tab = this.dataset.tab;
+        currentTab = tab;
+
+        // Show correct tab content
+        tabContents.forEach(tc => {
+          tc.style.display = (tc.id === tab) ? "flex" : "none";
+          tc.setAttribute("aria-hidden", tc.id === tab ? "false" : "true");
+        });
+
+        // Update header title and icon
+        const titleMap = {
+          tab1: "General Chat",
+          tab2: "Legislation Chat",
+          tab3: "Reports Chat",
+          tab4: "Social Indices Chat",
+          tab5: "FAQ",
+          tab6: "Settings"
+        };
+        const iconMap = {
+          tab1: "fa-comment",
+          tab2: "fa-gavel",
+          tab3: "fa-chart-bar",
+          tab4: "fa-file-alt",
+          tab5: "fa-question-circle",
+          tab6: "fa-cog"
+        };
+        document.getElementById("chat-title").textContent = titleMap[tab];
+        document.querySelector("#chat-header .icon i").className = `fas ${iconMap[tab]}`;
+
+        // Focus on input if available
+        const currentTabInput = document.getElementById(`chat-input-${tab}`);
+        if (currentTabInput) {
+          setTimeout(() => currentTabInput.focus(), 50);
+        }
+
+        // Show welcome message if needed
+        showWelcomeMessage(tab);
+      });
+
+      // Add keyboard support for accessibility
+      link.addEventListener("keydown", e => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          link.click();
+        }
+      });
+    });
+
+    // Handle FAQ toggle
+    document.querySelectorAll(".faq-question").forEach(q => {
+      q.addEventListener("click", function() {
+        const answer = this.nextElementSibling;
+        const icon = this.querySelector('.icon i');
+        const isExpanded = answer.style.display === "block";
+        
+        answer.style.display = isExpanded ? "none" : "block";
+        icon.className = `fas ${isExpanded ? 'fa-angle-down' : 'fa-angle-up'}`;
+        this.setAttribute("aria-expanded", !isExpanded);
+      });
+
+      // Add keyboard support for FAQ
+      q.addEventListener("keydown", e => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          q.click();
+        }
+      });
+    });
+
+    // Attach send button and enter key events
+    ["tab1", "tab2", "tab3", "tab4"].forEach(tab => {
+      const sendBtn = document.getElementById(`send-btn-${tab}`);
+      const input = document.getElementById(`chat-input-${tab}`);
+
+      if (sendBtn && input) {
+        sendBtn.addEventListener("click", () => sendMessage(tab));
+        input.addEventListener("keydown", e => {
+          if (e.key === "Enter" && !e.shiftKey) {
+            e.preventDefault();
+            sendMessage(tab);
+          }
+        });
+      }
+    });
+
+    // Settings: Font size
+    const fontSizeSelect = document.getElementById("font-size-select");
+    if (fontSizeSelect) {
+      fontSizeSelect.addEventListener("change", function() {
+        const size = this.value;
+        ["tab1", "tab2", "tab3", "tab4"].forEach(tab => {
+          const chatBox = document.getElementById(`chat-box-${tab}`);
+          if (chatBox) chatBox.style.fontSize = size;
+        });
+      });
+    }
+
+    // Settings: Theme color
+    const themeColorSelect = document.getElementById("theme-color-select");
+    if (themeColorSelect) {
+      themeColorSelect.addEventListener("change", function() {
+        const color = this.value;
+        document.getElementById("chat-header").style.backgroundColor = color;
+        document.querySelectorAll(".is-primary").forEach(el => {
+          el.style.backgroundColor = color;
+          el.style.borderColor = color;
+        });
+        // Update sidebar active tab border
+        const activeTab = document.querySelector(".tab-link.is-active");
+        if (activeTab) activeTab.style.borderLeftColor = color;
+      });
+    }
+
+
+
+    // Settings: Download chat history
+    const downloadBtn = document.getElementById("download-chat-btn");
+    if (downloadBtn) {
+      downloadBtn.addEventListener("click", () => {
+        if (currentTab === "tab5") {
+          alert("No chat history to download on this tab.");
+          return;
+        }
+        const history = chatHistories[currentTab];
+        if (!history || history.length === 0) {
+          alert("No chat history to download.");
+          return;
+        }
+        
+        let content = `Chat history for ${document.getElementById("chat-title").textContent}:\n\n`;
+        history.forEach(item => {
+          const time = new Date(item.time).toLocaleString();
+          content += `[${time}] ${item.sender.toUpperCase()}: ${item.text}\n`;
+        });
+        
+        const blob = new Blob([content], {type: "text/plain"});
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = `chat_history_${currentTab}_${new Date().toISOString().slice(0,10)}.txt`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      });
+    }
+
+    // Initialize first tab
+    showWelcomeMessage("tab1");
+    document.querySelector('.tab-link[data-tab="tab1"]').click();
+  });
+  
+</script>
+
+<style>
+
+.spinner-border {
+  width: 2rem;
+  height: 2rem;
+  border-width: 0.25rem;
+}
+
+.chat-box {
+  position: relative; 
+}
+
+.spinner-border.text-primary {
+  color: #4CAF50; 
+}
+
+.tab-content {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  height: 100%;
+  overflow-y: scroll; 
+  scrollbar-width: thin;
+  -webkit-overflow-scrolling: touch;
+  }
+
+
+.chat-box {
+  flex-grow: 1;
+  overflow-y: auto;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.field.has-addons {
+  flex-shrink: 0;
+  padding: 1rem;
+  border-top: 1px solid #ddd;
+  background: #f9f9f9;
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  border-radius: 0 0 8px 8px;
+}
+
+  
+  .message {
+    max-width: 80%;
+    margin-bottom: 0.5rem;
+  }
+  
+  .user-message {
+    align-self: flex-end;
+  }
+  
+  .bot-message {
+    align-self: flex-start;
+  }
+  
+  .message-bubble {
+    border-radius: 1rem;
+    padding: 0.75rem 1rem;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+  }
+  
+  .message-bubble.is-primary {
+    background-color: #4CAF50;
+    color: white;
+  }
+  
+  .message-bubble.is-light {
+    background-color: #f5f5f5;
+    color: #333;
+  }
+  
+  .message-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+    font-size: 0.8rem;
+  }
+  
+  .message-sender {
+    font-weight: bold;
+  }
+  
+  .message-time {
+    opacity: 0.7;
+  }
+  
+  .sidebar-menu {
+    scrollbar-width: thin;
+    scrollbar-color: #3d5166 #2c3e50;
+  }
+  
+  .sidebar-menu::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  .sidebar-menu::-webkit-scrollbar-track {
+    background: #2c3e50;
+  }
+  
+  .sidebar-menu::-webkit-scrollbar-thumb {
+    background-color: #3d5166;
+    border-radius: 3px;
+  }
+  
+  .menu-list a {
+    border-radius: 4px;
+    padding: 0.5em 0.75em;
+    margin-bottom: 0.5rem;
+    transition: all 0.2s ease;
+  }
+  
+  .menu-list a:hover, .menu-list a:focus {
+    background-color: rgba(255,255,255,0.1);
+    color: white !important;
+    outline: none;
+  }
+  
+  .chat-box {
+    scrollbar-width: thin;
+    scrollbar-color: #ddd #f9f9f9;
+  }
+  
+  .chat-box::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  .chat-box::-webkit-scrollbar-track {
+    background: #f9f9f9;
+  }
+  
+  .chat-box::-webkit-scrollbar-thumb {
+    background-color: #ddd;
+    border-radius: 4px;
+  }
+  
+  .message-header.faq-question {
+    background-color: #4CAF50;
+    color: white;
+  }
+  
+  .message-body.faq-answer {
+    padding: 1rem;
+    border: 1px solid #4CAF50;
+    border-top: none;
+    border-radius: 0 0 4px 4px;
+  }
+
+  .tab-link:focus {
+    outline: 2px solid #fff;
+    outline-offset: 2px;
+  }
+
+  .button:focus, .input:focus {
+    outline: 2px solid #4CAF50;
+    outline-offset: 2px;
+  }
+</style>

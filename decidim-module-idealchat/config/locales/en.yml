@@ -1,0 +1,45 @@
+en:
+  decidim:
+    ideal_chatbot:
+      title: "IDEAL Chatbot"
+      welcome_message: "Hello! How can I help you today? Please select a topic:"
+      select_language: "Select Language"
+      thinking: "IDEAL Chatbot is thinking..."
+      placeholder: "Type your message..."
+      categories:
+        general: "General Questions"
+        legislation: "Legislation"
+        reports: "Reports"
+        social_indices: "Social Indices"
+      category_selected:
+        general: "You've selected General Questions. What would you like to know?"
+        legislation: "You've selected Legislation. What specific law or regulation are you interested in?"
+        reports: "You've selected Reports. What type of report are you looking for?"
+        social_indices: "You've selected Social Indices. Which indicator are you interested in?"
+      errors:
+        backend_error: "⚠️ We're experiencing technical difficulties. Please try again later. (Error: %{error})"
+        unknown_topic: "I couldn't recognize that topic. Please try one of the available options."
+      faq:
+        platform_info: "About the Platform"
+        functionalities: "Platform Functionalities"
+        participatory_processes: "Participatory Processes"
+        assemblies: "Assemblies"
+      faq_answers:
+        platform_info: "This platform is designed for citizen participation in democratic decision-making processes."
+        functionalities: "The platform offers features like proposals, debates, voting, and participatory budgeting."
+        participatory_processes: "Participatory processes allow citizens to collaborate on specific initiatives through defined phases."
+        assemblies: "Assemblies are spaces for deliberation where citizens can discuss and make collective decisions."
+      legislation:
+        found: "I found this legislation: %{title}. Description: %{description}"
+      reports:
+        found: "Here's the report you requested: %{title}. Summary: %{summary}"
+      social_indices:
+        found: "The social index '%{name}' currently shows: %{value}. About this index: %{description}"
+
+
+
+
+en:
+  decidim:
+    menu:
+      idealchat: "Chatbot"
