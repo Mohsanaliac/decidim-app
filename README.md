@@ -4,6 +4,126 @@ Free Open-Source participatory democracy, citizen participation and open governm
 
 This is the open-source repository for decidim_app, based on [Decidim](https://github.com/decidim/decidim).
 
+
+
+# Comprehensive Guide to Decidim: Installation, Usage, and Customization
+
+## Part 1: Basic Installation of Ruby on Rails
+
+To set up a Ruby on Rails environment for Decidim, follow these steps:
+
+### Step 1: Install Ruby
+
+Ensure you have Ruby installed (Decidim 0.27.10 requires Ruby 3.0 or higher). Use a version manager like `rbenv` or `rvm`:
+
+```bash
+# Install rbenv (example for Ubuntu)
+sudo apt update
+sudo apt install -y rbenv
+rbenv install 3.1.2
+rbenv global 3.1.2
+```
+
+Verify Ruby version:
+
+```bash
+ruby -v
+# Should output: ruby 3.1.2p...
+```
+
+### Step 2: Install Rails
+
+Install the Rails gem (version 7.0 or compatible with Decidim 0.27.10):
+
+```bash
+gem install rails -v 7.0.8
+```
+
+Verify Rails version:
+
+```bash
+rails -v
+# Should output: Rails 7.0.8
+```
+
+### Step 3: Install System Dependencies
+
+Install required dependencies (e.g., for Ubuntu):
+
+```bash
+sudo apt install -y nodejs postgresql libpq-dev imagemagick
+```
+
+Set up PostgreSQL:
+
+```bash
+sudo service postgresql start
+sudo -u postgres psql -c "CREATE USER decidim WITH PASSWORD 'decidim';"
+sudo -u postgres createdb decidim_development
+```
+
+## Part 2: Installing Decidim
+
+### Step 1: Create a New Decidim Application
+
+Generate a new Decidim app:
+
+```bash
+gem install decidim -v 0.27.10
+decidim decidim_app
+cd decidim_app
+```
+
+### Step 2: Configure Database
+
+Edit `config/database.yml` to match your PostgreSQL setup:
+
+```yaml
+development:
+  adapter: postgresql
+  encoding: unicode
+  database: decidim_development
+  username: decidim
+  password: decidim
+  host: localhost
+```
+
+### Step 3: Install Dependencies and Set Up Database
+
+Run:
+
+```bash
+bundle install
+bin/rails db:create db:migrate db:seed
+```
+
+### Step 4: Start the Development Server
+
+```bash
+bin/rails server
+```
+
+Access the app at `http://localhost:3000`. The default admin credentials are provided in the seed data (check `db/seeds.rb`).
+
+## Part 3: Version Checking
+
+To verify versions of installed components:
+
+- **Ruby**: `ruby -v`
+- **Rails**: `rails -v`
+- **Decidim**: Check `Gemfile.lock` or run:
+
+```bash
+bundle show decidim
+# Should output: /path/to/gems/decidim-0.27.10
+```
+
+- **PostgreSQL**: `psql --version`
+- **Node.js**: `node -v`
+
+
+
+
 ## Setting up the application
 
 You will need to do some steps before having the app working properly once you've deployed it:
