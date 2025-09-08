@@ -20,3 +20,40 @@ user.save!
 6. Fill the rest of the form and submit it.
 
 You're good to go!
+
+
+
+
+
+
+
+
+
+# Decidim IdealChat Module
+
+**Decidim IdealChat** is a custom module for Decidim 0.27.10 that integrates an AI-powered chatbot assistant into your participatory platform.
+
+---
+
+## Table of Contents
+
+- [Installation](#installation)  
+  - [Using Existing Modules (`decidim-templates` example)](#using-existing-modules-decidem-templates-example)  
+  - [Creating Your Own Module (`idealchat`)](#creating-your-own-module-idealchat)  
+- [Usage](#usage)  
+- [Customizations](#customizations)  
+- [Translations](#translations)  
+
+---
+
+## Installation
+
+### Using Existing Modules (`decidim-templates` example)
+
+1. **Add the Gem**
+
+```ruby
+gem "decidim-templates", "0.27.10"
+
+
+
