@@ -116,13 +116,13 @@ bin/rails server
 
 Access the app at `http://localhost:3000`. The default admin credentials are provided in the seed data (check `db/seeds.rb`).
 
-OR setup through the Github:
-        1. **Clone the Repository**:
+## OR setup through the Github:
+### 1. **Clone the Repository**:
           ```bash
           git clone https://github.com/decidim/decidim.git
           cd decidim
           ```
-        2. **Install Dependencies**:
+###    2. **Install Dependencies**:
           - Ruby: Use `rbenv` or `rvm` to manage versions.
           - Install gems:
             ```bash
@@ -132,13 +132,13 @@ OR setup through the Github:
             ```bash
             yarn install
             ```
-        3. **Configure the Database**:
+###        3. **Configure the Database**:
           - Set up PostgreSQL and update `config/database.yml` if needed.
           - Create and migrate the database:
             ```bash
             bundle exec rails db:create db:migrate
             ```
-        4. **Seed Initial Data**:
+###        4. **Seed Initial Data**:
           - Create a system admin:
             ```bash
             bundle exec rails decidim_system:admin:create
@@ -147,7 +147,7 @@ OR setup through the Github:
             ```bash
             bundle exec rails db:seed
             ```
-        5. **Run the Server**:
+###      5. **Run the Server**:
           ```bash
           bundle exec rails s
           ```
