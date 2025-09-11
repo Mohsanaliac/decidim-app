@@ -526,8 +526,7 @@ end
 
 
 ### Step 8: check controllers for page rendering, methods calling etc. inside your module.
-* /home/mohsan/decidim/decidim_app_FAQ/decidim-module-idealchat/app/controllers/decidim/idealchat
-
+* /home/mohsan/decidim/decidim_app/decidim-module-idealchat/app/controllers/decidim/idealchat/chat_controller.rb
 
 
 ### step 9: finally restart your application 
