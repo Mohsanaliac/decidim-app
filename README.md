@@ -141,7 +141,7 @@ Access the app at `http://localhost:3000`. The default admin credentials are pro
 ###        4. **Seed Initial Data**:
           - Create a system admin:
             ```bash
-            bundle exec rails decidim_system:admin:create
+            bundle exec rails decidim_system:create_admin
             ```
           - Populate sample data:
             ```bash
@@ -161,35 +161,17 @@ To verify versions of installed components:
 - **Ruby**: `ruby -v`
 - **Rails**: `rails -v`
 - **Decidim**: Check `Gemfile.lock` or run:
-
 ```bash
 bundle show decidim
-# Should output: /path/to/gems/decidim-0.27.10
 ```
+<!-- Should output: /path/to/gems/decidim-0.27.10 -->
 
 - **PostgreSQL**: `psql --version`
 - **Node.js**: `node -v`
 
 
 
-## Part 4: Understanding Core Concepts
-To master Decidim, grasp its foundational concepts and how they translate to code.
-
-### Key Concepts
-- **Participatory Spaces**: Represented by models like `Decidim::ParticipatoryProcess`, `Decidim::Assembly`, and `Decidim::Initiative`. Each space has a `manifest` defining its behavior (see `lib/decidim/participatory_space_manifest.rb`).
-- **Components**: Pluggable features (e.g., `Decidim::Proposals::Proposal`) attached to spaces. Defined in `app/components` within each module.
-- **Organizations**: Managed via `Decidim::Organization`, enabling multitenancy.
-- **Authorization**: Handled by `pundit` policies in `app/policies`.
-- **Notifications**: Managed via `Decidim::EventsManager` and sent through ActionMailer or Sidekiq.
-
-### Code Locations
-- **Models**: `app/models/decidim/` (e.g., `decidim/proposals/proposal.rb`).
-- **Controllers**: `app/controllers/decidim/` (e.g., `decidim/proposals/proposals_controller.rb`).
-- **Views**: `app/views/decidim/` (ERB templates for frontend).
-- **Manifests**: `lib/decidim/` (defines spaces and components).
-
-
-## Setting up the application
+### Setting up the application
 
 You will need to do some steps before having the app working properly once you've deployed it:
 
@@ -512,31 +494,49 @@ module Decidim
 end
 ```
 
-### Step 7: Add the Chatbot to the Main Menu
-
-To add the chatbot to the main Decidim menu, ensure the `engine.rb` file includes the menu initializer (already added in Step 4):
-
+### Step 7: edit engine.rb in your new created module.
 ```ruby
-initializer "decidim.idealchat.menu" do
-  Decidim.menu :menu do |menu|
-    menu.add_item :idealchat,
-                  I18n.t("menu.idealchat", scope: "decidim"),
-                  Rails.application.routes.url_helpers.decidim_idealchat_path,
-                  position: 5,
-                  icon_name: "comments"
+module Decidim
+  module Idealchat
+    class Engine < ::Rails::Engine
+      isolate_namespace Decidim::Idealchat
+
+      routes do
+        get "/", to: "chat#index"
+        post "ask", to: "chat#ask"
+      end
+
+      initializer "Idealchat.webpacker.assets_path" do
+        Decidim.register_assets_path File.expand_path("app/packs", root)
+      end
+
+      initializer "decidim.idealchat.menu" do
+        Decidim.menu :menu do |menu|
+          menu.add_item :idealchat,
+                        I18n.t("menu.idealchat", scope: "decidim"),
+                        Rails.application.routes.url_helpers.decidim_idealchat_path,
+                        position: 5,
+                        icon_name: "comments"
+        end
+      end
+    end
   end
 end
 ```
 
-### Step 8: Add Translation for the Module
 
-Edit `config/locales/en.yml` to include:
+### Step 8: check controllers for page rendering, methods calling etc. inside your module.
+* /home/mohsan/decidim/decidim_app_FAQ/decidim-module-idealchat/app/controllers/decidim/idealchat
 
-```yaml
-en:
-  decidim:
-    menu:
-      idealchat: "Chatbot"
+
+
+### step 9: finally restart your application 
+```bash
+ctrl + c
+```
+
+```bash
+rails s
 ```
 
 
