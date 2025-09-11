@@ -39,6 +39,7 @@ Install the Rails gem (version 7.0 or compatible with Decidim 0.27.10):
 gem install rails -v 7.0.8
 ```
 
+You can find all the gems available on the website: `https://rubygems.org/search?query=decidim` 
 Verify Rails version:
 
 ```bash
@@ -64,6 +65,15 @@ sudo -u postgres createdb decidim_development
 
 ## Part 2: Installing Decidim
 
+Find all the modules in the decidim and how do they help managing the decidim platform:
+* `https://github.com/decidim/decidim`
+* `https://decidim.org/modules/`
+
+This helps in generating the decidim application and further integration of new components to decidim.
+* `https://github.com/decidim/decidim/tree/develop/decidim-generators` 
+* `https://decidim.org/modules/` 
+
+
 ### Step 1: Create a New Decidim Application
 
 Generate a new Decidim app:
@@ -73,6 +83,7 @@ gem install decidim -v 0.27.10
 decidim decidim_app
 cd decidim_app
 ```
+
 
 ### Step 2: Configure Database
 
@@ -105,6 +116,44 @@ bin/rails server
 
 Access the app at `http://localhost:3000`. The default admin credentials are provided in the seed data (check `db/seeds.rb`).
 
+OR setup through the Github:
+        1. **Clone the Repository**:
+          ```bash
+          git clone https://github.com/decidim/decidim.git
+          cd decidim
+          ```
+        2. **Install Dependencies**:
+          - Ruby: Use `rbenv` or `rvm` to manage versions.
+          - Install gems:
+            ```bash
+            bundle install
+            ```
+          - Install Node.js packages:
+            ```bash
+            yarn install
+            ```
+        3. **Configure the Database**:
+          - Set up PostgreSQL and update `config/database.yml` if needed.
+          - Create and migrate the database:
+            ```bash
+            bundle exec rails db:create db:migrate
+            ```
+        4. **Seed Initial Data**:
+          - Create a system admin:
+            ```bash
+            bundle exec rails decidim_system:admin:create
+            ```
+          - Populate sample data:
+            ```bash
+            bundle exec rails db:seed
+            ```
+        5. **Run the Server**:
+          ```bash
+          bundle exec rails s
+          ```
+          Access at `http://localhost:3000`. 
+
+
 ## Part 3: Version Checking
 
 To verify versions of installed components:
@@ -123,6 +172,22 @@ bundle show decidim
 
 
 
+## Part 4: Understanding Core Concepts
+To master Decidim, grasp its foundational concepts and how they translate to code.
+
+### Key Concepts
+- **Participatory Spaces**: Represented by models like `Decidim::ParticipatoryProcess`, `Decidim::Assembly`, and `Decidim::Initiative`. Each space has a `manifest` defining its behavior (see `lib/decidim/participatory_space_manifest.rb`).
+- **Components**: Pluggable features (e.g., `Decidim::Proposals::Proposal`) attached to spaces. Defined in `app/components` within each module.
+- **Organizations**: Managed via `Decidim::Organization`, enabling multitenancy.
+- **Authorization**: Handled by `pundit` policies in `app/policies`.
+- **Notifications**: Managed via `Decidim::EventsManager` and sent through ActionMailer or Sidekiq.
+
+### Code Locations
+- **Models**: `app/models/decidim/` (e.g., `decidim/proposals/proposal.rb`).
+- **Controllers**: `app/controllers/decidim/` (e.g., `decidim/proposals/proposals_controller.rb`).
+- **Views**: `app/views/decidim/` (ERB templates for frontend).
+- **Manifests**: `lib/decidim/` (defines spaces and components).
+
 
 ## Setting up the application
 
@@ -140,11 +205,6 @@ user.save!
 6. Fill the rest of the form and submit it.
 
 You're good to go!
-
-
-
-
-
 
 
 

@@ -42,4 +42,16 @@ en:
 en:
   decidim:
     menu:
-      idealchat: "Chatbot"
+      idealchat: "Ideal Chat"
+      
+en:
+  decidim:
+    components:
+      idealchat:
+        name: Ideal Chat
+
+
+en:
+  decidim:
+    menu:
+      idealchat: "Ideal Chat"

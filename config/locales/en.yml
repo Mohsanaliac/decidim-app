@@ -31,6 +31,25 @@
 
 
 en:
+  decidim:
+    components:
+      idealchat:
+        name: Ideal Chat
+
+
+en:
+  decidim:
+    menu:
+      idealchat: "IdealChat"
+
+en:
+  decidim:
+    pages:
+      home:
+        hero:
+          title: "Your custom homepage title"
+
+en:
        decidim:
          components:
            ideal_rag:
